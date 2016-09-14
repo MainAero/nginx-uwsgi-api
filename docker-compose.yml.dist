@@ -1,0 +1,15 @@
+uwsgi:
+  build: .
+  volumes:
+    - .:/usr/src/app
+  environment:
+    UWSGI_PROCESSES: 4
+    UWSGI_THREAD: 2
+nginx:
+  image: "nginx"
+  links:
+    - uwsgi:uwsgi-server
+  ports:
+    - 80:80
+  volumes:
+    - ./nginx-proxy/conf.d:/etc/nginx/conf.d
